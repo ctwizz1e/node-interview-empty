@@ -7,6 +7,18 @@
  *
  * If an invalid input is provided, throw an InputError
  *
+ * Example:
+ *
+ * calling fizzBuzz(12, 18, console.log) should call...
+ * printFucntion("Fizz")
+ * printFucntion("13")
+ * printFucntion("14")
+ * printFucntion("FizzBuzz")
+ * printFucntion("16")
+ * printFucntion("17")
+ * printFucntion("Fizz")
+ *
+ *
  * @param start number to start printing fizzbuzz logic from - inclusive
  * @param end number to stop printing fizzbuzz logic from - exclusive
  * @param printFunction function to pass statements to print
