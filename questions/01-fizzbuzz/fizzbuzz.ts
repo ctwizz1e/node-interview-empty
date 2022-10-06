@@ -9,14 +9,17 @@
  *
  * Example:
  *
- * calling fizzBuzz(12, 18, console.log) should call...
- * printFucntion("Fizz")
- * printFucntion("13")
- * printFucntion("14")
- * printFucntion("FizzBuzz")
- * printFucntion("16")
- * printFucntion("17")
- * printFucntion("Fizz")
+ * calling fizzBuzz(12, 21, console.log) should call...
+ * console.log("Fizz")
+ * console.log("13")
+ * console.log("14")
+ * console.log("FizzBuzz")
+ * console.log("16")
+ * console.log("17")
+ * console.log("Fizz")
+ * console.log("19")
+ * console.log("Buzz")
+ *
  *
  *
  * @param start number to start printing fizzbuzz logic from - inclusive
