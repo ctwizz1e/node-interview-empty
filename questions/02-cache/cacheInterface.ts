@@ -1,12 +1,4 @@
-import "datejs";
-import { IInternalCache } from "./cacheInterface";
-
-/**
- * This class should implement a standard cache
- */
-export class InternalCache<T> implements IInternalCache<T> {
-  public static DefaultExpirationMs: number = 5 * 60 * 1000; // 5 min expiration default
-
+export interface IInternalCache<T> {
   /**
    * Get a record from the cache
    *
@@ -16,10 +8,7 @@ export class InternalCache<T> implements IInternalCache<T> {
    * @param key key to find in the cache
    * @returns the record from the cache
    */
-  get(key: string): T {
-    // TODO implement
-    throw new Error("not implemented");
-  }
+  get(key: string): T;
 
   /**
    * Try to get a record from the cache. If a cache miss, add the record to the cache before returning. The loader function
@@ -29,14 +18,11 @@ export class InternalCache<T> implements IInternalCache<T> {
    * @param options optional settings for the get/add function
    * @returns the cache value and a flag specifying if the value was added to the cache on this call
    */
-  async getOrAdd(
+  getOrAdd(
     key: string,
     loadFunction: () => T | Promise<T>,
     options?: ExpirationOptions
-  ): Promise<{ value: T; isNew: boolean }> {
-    // TODO implement
-    throw new Error("not implemented");
-  }
+  ): Promise<{ value: T; isNew: boolean }>;
 
   /**
    * Add or update a record to/in the cache, updating the expiration date
@@ -44,34 +30,23 @@ export class InternalCache<T> implements IInternalCache<T> {
    * @param value value to load into the cache
    * @param options optional settings for the get/add function
    */
-  addOrUpdate(key: string, value: T, options?: ExpirationOptions) {
-    // TODO implement
-    throw new Error("not implemented");
-  }
+  addOrUpdate(key: string, value: T, options?: ExpirationOptions): void;
 
   /**
    * Get all keys of non-expired records in the cache
-   * @returns array of all key names;j
+   * @returns array of all key names
    */
-  getAllValidKeys(options?: FilterOptions<T>): string[] {
-    // TODO implement
-    throw new Error("not implemented");
-  }
+  getAllValidKeys(options?: FilterOptions<T>): string[];
 
   /**
    * Get generator of all non-expired key/value/expiration records in the cache
    */
-  *getAllValidKeysEnumerator(options?: FilterOptions<T>): Generator<{
-    key: string;
-    value: T;
-    expiration: Date;
-  }> {
-    // TODO implement
-    throw new Error("not implemented");
-  }
+  getAllValidKeysEnumerator(
+    options?: FilterOptions<T>
+  ): Generator<{ key: string; value: T; expiration: Date }>;
 }
 
-export interface ExpirationOptions {
+interface ExpirationOptions {
   expirationInMs?: number;
 }
 

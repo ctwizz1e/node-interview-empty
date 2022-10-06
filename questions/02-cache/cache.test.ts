@@ -1,7 +1,8 @@
 import { ExpiredRecordError, InternalCache, NotFoundError } from "./cache";
+import { IInternalCache } from "./cacheInterface";
 
 describe("cache tests", () => {
-  let cache: InternalCache;
+  let cache: IInternalCache<typeof dto>;
   const key = "k1";
   const dto = { value: "abc" };
 
@@ -15,7 +16,7 @@ describe("cache tests", () => {
     });
 
     test("get - with expired record - throws ExpiredRecordError", () => {
-      cache.addOrUpdate(key, {}, { expirationInMs: -1500 });
+      cache.addOrUpdate(key, { value: "abc" }, { expirationInMs: -1500 });
       expect(() => cache.get(key)).toThrow(ExpiredRecordError);
     });
 
@@ -127,27 +128,30 @@ describe("cache tests", () => {
       let count = 0;
 
       // keys and values will match count per iteration
-      cache.addOrUpdate("0", 0);
-      cache.addOrUpdate("1", 1);
-      cache.addOrUpdate("2", 2);
+      cache.addOrUpdate("0", { value: "0" });
+      cache.addOrUpdate("1", { value: "1" });
+      cache.addOrUpdate("2", { value: "2" });
 
       for (const r of cache.getAllValidKeysEnumerator()) {
-        expect(r).toMatchObject({ key: `${count}`, value: count });
+        expect(r).toMatchObject({
+          key: `${count}`,
+          value: { value: `${count}` },
+        });
         count++;
       }
     });
 
     test("getAllValidKeysEnumerator - applies filters", () => {
       // keys and values will match count per iteration
-      cache.addOrUpdate("0", 0);
-      cache.addOrUpdate("1", 1);
-      cache.addOrUpdate("2", 2);
+      cache.addOrUpdate("0", { value: "0" });
+      cache.addOrUpdate("1", { value: "1" });
+      cache.addOrUpdate("2", { value: "2" });
 
       // apply filter - should only match the 1 iteration
       for (const r of cache.getAllValidKeysEnumerator({
-        filter: (r: any) => r % 2 === 1,
+        filter: (r: any) => parseInt(r.value) % 2 === 1,
       })) {
-        expect(r).toMatchObject({ key: `1`, value: 1 });
+        expect(r).toMatchObject({ key: `1`, value: { value: "1" } });
       }
 
       // apply filter that should never match anything
